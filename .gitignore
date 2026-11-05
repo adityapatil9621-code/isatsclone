@@ -1,0 +1,21 @@
+# Dependencies and build
+node_modules/
+dist/
+coverage/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+server/secrets/
+**/firebase-service-account.json
+
+# Database backups
+*.dump
+*.backup
+ISATS-backups/
+
+# System files and logs
+.DS_Store
+Thumbs.db
+*.log

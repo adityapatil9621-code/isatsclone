@@ -1,0 +1,3 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+export default function Footer(){return <footer className="mt-auto border-t bg-muted/30"><div className="max-w-7xl mx-auto px-4 py-10 flex flex-col sm:flex-row gap-4 justify-between text-sm text-muted-foreground"><div className="flex flex-col gap-3"><img src="/isats-logo.jpeg" alt="ISATS" className="h-12 w-auto self-start rounded-md bg-white p-1" /><p>© {new Date().getFullYear()} ISATS Private Limited. All rights reserved.</p></div><div className="flex gap-4"><Link to="/privacy-policy" className="hover:text-primary">Privacy Policy</Link><Link to="/terms-and-conditions" className="hover:text-primary">Terms & Conditions</Link></div></div></footer>}
