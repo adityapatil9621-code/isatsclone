@@ -1156,7 +1156,9 @@ html { scroll-behavior: smooth; }
 .isats-topic-item > span { flex:0 0 auto; color:#39888a; font-size:9px; font-weight:850; letter-spacing:.08em; }
 .isats-topic-item p { margin:0; color:#526e72; font-size:11px; line-height:1.55; }
 .isats-curriculum-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; align-items:start; }
-.isats-curriculum-tile { min-width:0; padding:19px; border:1px solid #e2ece9; border-radius:14px; background:linear-gradient(150deg,#fff,#f8fbfa); }
+.isats-curriculum-tile { position:relative; min-width:0; padding:19px; border:1px solid #e2ece9; border-radius:14px; background:#fff !important; background-image:none !important; box-shadow:none !important; transform:none !important; perspective:none !important; }
+.isats-curriculum-tile::before, .isats-curriculum-tile::after { content:none !important; display:none !important; }
+.isats-curriculum-tile:hover { background:#fff !important; background-image:none !important; box-shadow:none !important; transform:none !important; border-color:#d5e5e1; }
 .isats-curriculum-index { color:#419194; font-size:9px; font-weight:850; letter-spacing:.14em; }
 .isats-curriculum-tile h4 { margin:9px 0 5px; color:#244d53; font-size:13px; line-height:1.4; text-transform:capitalize; }
 .isats-curriculum-tile > p { margin:0 0 13px; color:#8a9b9c; font-size:9px; }
