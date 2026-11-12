@@ -44,7 +44,7 @@ export default function AboutUsPage() {
           </section>
 
           <section className="isats-about-intro">
-            <div className="isats-about-intro-label"><span className="isats-section-kicker">OUR INSTITUTE</span><span className="isats-about-vertical">EDUCATION · PRACTICE · CAREER</span></div>
+            <div className="isats-about-intro-label"><span className="isats-section-kicker">OUR INSTITUTE</span></div>
             <motion.div initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .55 }}>
               <h2>Where knowledge<br />becomes <em>capability.</em></h2>
               <p>ISATS (Institute of Skill-based Aesthetic & Trichology Sciences) is a premier educational institution dedicated to providing comprehensive training in the fields of trichology, aesthetics, and clinical aesthetics. Established with the vision of creating skilled professionals for the rapidly growing healthcare and beauty industry, we have successfully trained thousands of students who are now thriving in their careers.</p>
@@ -70,7 +70,7 @@ export default function AboutUsPage() {
 
           <section className="isats-why-section">
             <div className="isats-inner-container">
-              <div className="isats-inner-section-heading"><div><span className="isats-section-kicker">THE ISATS DIFFERENCE</span><h2>Why choose <em>ISATS?</em></h2></div><p>Discover what makes us the preferred choice for aspiring healthcare professionals.</p></div>
+              <div className="isats-inner-section-heading"><div><h2>Why choose <em>ISATS?</em></h2></div><p>Discover what makes us the preferred choice for aspiring healthcare professionals.</p></div>
               <div className="isats-why-grid">{whyChoose.map((item, index) => <motion.article className="isats-why-card" key={item.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .45, delay: index * .07 }}><span className="isats-why-icon"><item.icon size={22} /></span><h3>{item.title}</h3><p>{item.description}</p></motion.article>)}</div>
             </div>
           </section>

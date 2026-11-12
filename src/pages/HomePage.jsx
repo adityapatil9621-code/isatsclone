@@ -43,23 +43,23 @@ export default function HomePage() {
                   <Button asChild size="lg" className="isats-primary-button"><Link to="/courses">Explore courses <ArrowRight size={18} /></Link></Button>
                   <Link to="/about" className="isats-text-link">Discover ISATS <MoveUpRight size={16} /></Link>
                 </div>
-                <div className="isats-hero-note"><span className="isats-note-mark"><Sparkles size={15} /></span><span>Learn with purpose. Practice with confidence.</span></div>
+                
               </motion.div>
               <motion.div className="isats-hero-visual" initial={{ opacity: 0, scale: 0.96, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.12 }}>
                 <div className="isats-visual-frame">
                   <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1100&q=85" alt="Modern clinical learning and professional training environment" />
                   <div className="isats-visual-overlay" />
-                  <div className="isats-visual-caption"><span className="isats-caption-dot" /><div><strong>Learn by doing</strong><small>Practical skills. Real confidence.</small></div></div>
+                  
                 </div>
-                <div className="isats-visual-index">ISATS <span> / </span> LEARN · PRACTICE · GROW</div>
+                
               </motion.div>
             </div>
-            <div className="isats-hero-bottom"><span>01 — 03</span><span>SKILL-BASED EDUCATION</span><span>SCROLL TO EXPLORE ↓</span></div>
+            <div className="isats-hero-bottom"></div>
           </section>
 
           <section className="isats-intro-section">
             <motion.div className="isats-section-heading" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={reveal}>
-              <span className="isats-section-kicker">THE ISATS APPROACH</span>
+              
               <h2>Education that moves<br /><em>you forward.</em></h2>
             </motion.div>
             <motion.div className="isats-intro-copy" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={reveal}>

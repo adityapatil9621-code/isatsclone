@@ -49,7 +49,7 @@ export default function ContactUsPage() {
 
           <section className="isats-contact-map-section">
             <div className="isats-inner-container">
-              <div className="isats-contact-map-heading"><div><span className="isats-section-kicker">COME VISIT US</span><h2>Find your way<br /><em>to ISATS.</em></h2></div><p>Use the map below to explore our location and plan your visit.</p></div>
+              <div className="isats-contact-map-heading"><div><h2>Find your way<br /><em>to ISATS.</em></h2></div><p>Use the map below to explore.</p></div>
               <div className="isats-contact-map-frame"><GoogleMapPlaceholder /></div>
             </div>
           </section>

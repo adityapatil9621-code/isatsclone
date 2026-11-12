@@ -54,7 +54,7 @@ export default function Register() {
       <section className="isats-auth-visual isats-register-visual">
         <Link to="/" className="isats-auth-logo" aria-label="ISATS home">ISATS<span>.</span></Link>
         <div className="isats-auth-visual-copy">
-          <span className="isats-auth-kicker">A SKILL-LED FUTURE AWAITS</span>
+          
           <h1>Start with<br /><em>possibility.</em></h1>
           <p>Take the first step towards a career built on practical skills, focused learning and confidence in your craft.</p>
         </div>

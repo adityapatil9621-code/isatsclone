@@ -81,8 +81,7 @@ export default function Login() {
           <Link to="/" className="isats-auth-mobile-logo">ISATS<span>.</span></Link>
           <Link to="/" className="isats-auth-back"><ArrowLeft size={15} /> Back to website</Link>
           <div className="isats-auth-heading">
-            <span className="isats-section-kicker">ACCOUNT ACCESS</span>
-            <h2>Welcome <em>back.</em></h2>
+            
             <p>Sign in to continue to your ISATS account.</p>
           </div>
 

@@ -61,7 +61,7 @@ const CoursesPage = () => {
                 <span className="isats-section-kicker">LEARN · PRACTICE · GROW</span>
                 <h1>Find your path<br /><em>to expertise.</em></h1>
                 <p>Explore focused programmes in aesthetics, trichology and laser technology. Build practical knowledge for the next stage of your professional journey.</p>
-                <div className="isats-course-hero-meta"><span><GraduationCap size={17} /> Skill-based programmes</span><span>Current course catalogue</span></div>
+                <div className="isats-course-hero-meta"><span><GraduationCap size={17} /> Skill-based programmes</span></div>
               </motion.div>
               <motion.div className="isats-course-hero-art" initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .75, delay: .1 }}>
                 <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1100&q=85" alt="Clinical education and practical learning" />
@@ -98,7 +98,7 @@ const CoursesPage = () => {
 
           <section className="isats-course-guidance">
             <div className="isats-guidance-inner">
-              <div><span className="isats-section-kicker">NEED A LITTLE GUIDANCE?</span><h2>Not sure where<br /><em>to begin?</em></h2></div>
+              <div><h2>Not sure where<br /><em>to begin?</em></h2></div>
               <div><p>Talk with our admissions team about your interests, eligibility and the programme that may suit your goals.</p><Button asChild className="isats-cta-button"><Link to="/contact">Speak to our team <MoveUpRight size={17} /></Link></Button></div>
             </div>
           </section>
