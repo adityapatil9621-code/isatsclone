@@ -9,7 +9,7 @@ const labelize = (value) => value.replaceAll('_', ' ');
 function TopicGrid({ items }) {
   const topics = safeList(items);
   if (!topics.length) return <p className="isats-module-muted">Course topics will be updated soon.</p>;
-  return <div className="isats-topic-grid">{topics.map((topic, index) => <div className={`isats-topic-item ${index === 0 ? 'isats-3d-test-card' : ''}`} key={index}><span>{String(index + 1).padStart(2, '0')}</span><p>{topic}</p></div>)}</div>;
+  return <div className="isats-topic-grid">{topics.map((topic, index) => <div className="isats-topic-item" key={index}><span>{String(index + 1).padStart(2, '0')}</span><p>{topic}</p></div>)}</div>;
 }
 
 function CurriculumGrid({ curriculum }) {
@@ -20,7 +20,7 @@ function CurriculumGrid({ curriculum }) {
     }
     return [{ name: section, items: value }];
   }).filter(({ items }) => Array.isArray(items) && items.length);
-  return <div className="isats-curriculum-grid">{sections.map(({ name, items }, index) => <motion.article className={`isats-curriculum-tile ${index === 0 ? 'isats-3d-test-card' : ''}`} key={name} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .045, .2) }}><span className="isats-curriculum-index">0{index + 1}</span><h4>{labelize(name)}</h4><p>{items.length} learning areas</p><ul>{items.map((item, itemIndex) => <li key={itemIndex}>{item}</li>)}</ul></motion.article>)}</div>;
+  return <div className="isats-curriculum-grid">{sections.map(({ name, items }, index) => <motion.article className="isats-curriculum-tile" key={name} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .045, .2) }}><span className="isats-curriculum-index">0{index + 1}</span><h4>{labelize(name)}</h4><p>{items.length} learning areas</p><ul>{items.map((item, itemIndex) => <li key={itemIndex}>{item}</li>)}</ul></motion.article>)}</div>;
 }
 
 function InfoPanel({ tab, course, syllabus }) {
