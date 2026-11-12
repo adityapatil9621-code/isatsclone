@@ -7,152 +7,102 @@ import Footer from '@/components/Footer.jsx';
 import WhatsAppButton from '@/components/WhatsAppButton.jsx';
 import AcademicPrompt from '@/components/AcademicPrompt.jsx';
 import { useAcademicStatus } from '@/lib/academicStatus.js';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card.jsx';
 import { Button } from '@/components/ui/button.jsx';
-import { ArrowRight, Scissors, Sparkles, Syringe } from 'lucide-react';
+import { ArrowRight, Scissors, Sparkles, Syringe, GraduationCap, MoveUpRight } from 'lucide-react';
 
 const CoursesPage = () => {
   const [academicStatus] = useAcademicStatus();
-
   const courseCategories = [
     {
-      icon: Sparkles,
+      icon: Sparkles, number: '01', eyebrow: 'AESTHETICS & TRICHOLOGY',
       title: 'Advanced CTL program',
       description: 'Advanced cosmetology, trichology, skin aesthetics and laser training with extensive hands-on practice, live demonstrations, real patient exposure, clinic setup support and business guidance.',
-      path: '/courses/aesthetics',
-      courses: '1 catalogue program',
-      color: 'from-orange-500/10 to-fuchsia-600/10',
-      injection: true // includes injection training: hidden for 10th pass
+      path: '/courses/aesthetics', courses: '1 catalogue program', injection: true,
+      image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=1000&q=85',
+      imageAlt: 'Professional skin care and aesthetics treatment environment'
     },
     {
-      icon: Scissors,
+      icon: Scissors, number: '02', eyebrow: 'HAIR & SCALP SCIENCE',
       title: 'Trichology certification',
       description: 'A dedicated hair and scalp certification covering anatomy, scalp diseases, hair analysis, hair fall, treatment protocols, hair care routines, trichoscopy and practical trichology skills.',
-      path: '/courses/trichology',
-      courses: '1 catalogue program',
-      color: 'from-emerald-500/10 to-teal-600/10'
+      path: '/courses/trichology', courses: '1 catalogue program',
+      image: 'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=1000&q=85',
+      imageAlt: 'Professional hair and scalp care'
     },
     {
-      icon: Syringe,
+      icon: Syringe, number: '03', eyebrow: 'LASER SCIENCE & TECHNOLOGY',
       title: 'Laser certification',
       description: 'A focused laser certification covering laser fundamentals, photo facial, Q-Switch, laser hair removal, machine knowledge, consumables, LLT hair treatment and pre/post care.',
-      path: '/courses/clinical-aesthetics',
-      courses: '1 catalogue program',
-      color: 'from-blue-500/10 to-purple-600/10'
+      path: '/courses/clinical-aesthetics', courses: '1 catalogue program',
+      image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1000&q=85',
+      imageAlt: 'Modern aesthetic laser treatment room'
     }
   ];
 
-  // 10th pass: no injection program, and Laser is shown as hair reduction only
   const visibleCategories = courseCategories
-    .filter((c) => !(academicStatus === 'tenth' && c.injection))
-    .map((c) =>
-      academicStatus === 'tenth' && c.path === '/courses/clinical-aesthetics'
-        ? {
-            ...c,
-            title: 'Laser hair reduction course',
-            description: 'A focused course on laser hair reduction, covering the technique, safety and practical skills.'
-          }
-        : c
-    );
+    .filter((course) => !(academicStatus === 'tenth' && course.injection))
+    .map((course) => academicStatus === 'tenth' && course.path === '/courses/clinical-aesthetics'
+      ? { ...course, title: 'Laser hair reduction course', description: 'A focused course on laser hair reduction, covering the technique, safety and practical skills.' }
+      : course);
 
   return (
     <>
       <Helmet>
         <title>Courses - ISATS</title>
-        <meta
-          name="description"
-          content="Explore the Advanced CTL, Trichology Certification and Laser Certification programs from the current ISATS course catalogue."
-        />
+        <meta name="description" content="Explore the Advanced CTL, Trichology Certification and Laser Certification programs from the current ISATS course catalogue." />
       </Helmet>
-
       <div className="min-h-screen flex flex-col">
         <Header />
-
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary/5 via-background to-accent/5 py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6" style={{ letterSpacing: '-0.02em' }}>
-                Our courses
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Explore the three current ISATS programs exactly as presented in the supplied course catalogue
-              </p>
-              <AcademicPrompt />
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Course Categories Section */}
-        <section className="py-20 bg-background">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {visibleCategories.map((category, index) => (
-                <motion.div
-                  key={category.path}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Card className={`h-full flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 rounded-2xl border-slate-200 bg-gradient-to-br ${category.color}`}>
-                    <CardHeader>
-                      <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                        <category.icon className="h-8 w-8 text-primary" />
-                      </div>
-                      <CardTitle className="text-2xl font-semibold">{category.title}</CardTitle>
-                      <CardDescription className="text-sm font-medium text-primary">
-                        {category.courses}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex-1">
-                      <p className="text-muted-foreground leading-relaxed">{category.description}</p>
-                    </CardContent>
-                    <CardFooter>
-                      <Button asChild className="w-full transition-all duration-200 active:scale-95">
-                        <Link to={category.path}>
-                          View courses
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </motion.div>
-              ))}
+        <main className="isats-inner-page isats-courses-page">
+          <section className="isats-page-hero isats-courses-hero">
+            <div className="isats-page-hero-orb" />
+            <div className="isats-page-hero-inner">
+              <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6 }}>
+                <span className="isats-section-kicker">LEARN · PRACTICE · GROW</span>
+                <h1>Find your path<br /><em>to expertise.</em></h1>
+                <p>Explore focused programmes in aesthetics, trichology and laser technology. Build practical knowledge for the next stage of your professional journey.</p>
+                <div className="isats-course-hero-meta"><span><GraduationCap size={17} /> Skill-based programmes</span><span>Current course catalogue</span></div>
+              </motion.div>
+              <motion.div className="isats-course-hero-art" initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .75, delay: .1 }}>
+                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1100&q=85" alt="Clinical education and practical learning" />
+                <div className="isats-course-art-caption"><span>ISATS</span><strong>Knowledge meets practice.</strong></div>
+              </motion.div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* CTA Section */}
-        <section className="py-16 bg-muted/30">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2 className="text-3xl font-semibold text-foreground mb-4" style={{ textWrap: 'balance' }}>
-                Not sure which course is right for you?
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Our admissions team is here to help you choose the perfect program based on your interests and career goals
-              </p>
-              <Button size="lg" asChild className="transition-all duration-200 active:scale-95">
-                <Link to="/contact">
-                  Contact us for guidance
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </motion.div>
-          </div>
-        </section>
+          <section className="isats-course-list-section">
+            <div className="isats-inner-container">
+              <div className="isats-inner-section-heading">
+                <div><span className="isats-section-kicker">EXPLORE THE CATALOGUE</span><h2>Programmes designed<br /><em>around practical skills.</em></h2></div>
+                <p>Choose an area of interest to explore its programme details, curriculum and learning outcomes.</p>
+              </div>
+              <AcademicPrompt />
+              <div className="isats-course-category-list">
+                {visibleCategories.map((course, index) => (
+                  <motion.article className="isats-course-category" key={course.path} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .5, delay: index * .08 }}>
+                    <div className="isats-course-category-image">
+                      <img src={course.image} alt={course.imageAlt} loading="lazy" />
+                      <span>{course.number}</span>
+                    </div>
+                    <div className="isats-course-category-copy">
+                      <div className="isats-course-category-kicker"><course.icon size={17} /> {course.eyebrow}</div>
+                      <h3>{course.title}</h3>
+                      <p>{course.description}</p>
+                      <div className="isats-course-category-bottom"><span>{course.courses}</span><Button asChild className="isats-course-link"><Link to={course.path}>Explore programme <ArrowRight size={16} /></Link></Button></div>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          </section>
 
+          <section className="isats-course-guidance">
+            <div className="isats-guidance-inner">
+              <div><span className="isats-section-kicker">NEED A LITTLE GUIDANCE?</span><h2>Not sure where<br /><em>to begin?</em></h2></div>
+              <div><p>Talk with our admissions team about your interests, eligibility and the programme that may suit your goals.</p><Button asChild className="isats-cta-button"><Link to="/contact">Speak to our team <MoveUpRight size={17} /></Link></Button></div>
+            </div>
+          </section>
+        </main>
         <Footer />
         <WhatsAppButton />
       </div>

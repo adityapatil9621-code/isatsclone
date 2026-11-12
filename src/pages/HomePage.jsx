@@ -6,159 +6,93 @@ import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import WhatsAppButton from '@/components/WhatsAppButton.jsx';
 import { Button } from '@/components/ui/button.jsx';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx';
-import { Award, Users, Briefcase, IndianRupee, ArrowRight } from 'lucide-react';
-import ApplyNowButton from '@/components/ApplyNowButton.jsx';
+import { Award, Users, Briefcase, IndianRupee, ArrowRight, Sparkles, MoveUpRight } from 'lucide-react';
 
-const HomePage = () => {
-  const highlights = [
-    {
-      icon: Award,
-      title: 'Govt. recognized courses',
-      description: 'All our programs are certified and recognized by government authorities'
-    },
-    {
-      icon: Users,
-      title: '100% practical training',
-      description: 'Hands-on experience with modern equipment and real-world scenarios'
-    },
-    {
-      icon: Briefcase,
-      title: 'Placement assistance',
-      description: 'Dedicated support to help you launch your career in healthcare aesthetics'
-    },
-    {
-      icon: IndianRupee,
-      title: 'Affordable fees',
-      description: 'Quality education at competitive prices with flexible payment options'
-    }
-  ];
+const highlights = [
+  { icon: Award, number: '01', title: 'Recognised learning', description: 'Structured programmes designed around professional standards and practical skills.' },
+  { icon: Users, number: '02', title: 'Hands-on training', description: 'Build confidence through guided practice, demonstrations and modern equipment.' },
+  { icon: Briefcase, number: '03', title: 'Career direction', description: 'Get guidance to take your next step in the aesthetics and trichology industry.' },
+  { icon: IndianRupee, number: '04', title: 'Accessible education', description: 'Explore focused training options and speak with our team about your goals.' }
+];
 
+const reveal = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } }
+};
 
+export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>ISATS - Institute of Skill-based Aesthetic & Trichology Sciences</title>
-        <meta
-          name="description"
-          content="ISATS offers government-recognized courses in Trichology, Aesthetics, and Clinical Aesthetics with 100% practical training and placement assistance."
-        />
+        <title>ISATS | Skill-based Aesthetic & Trichology Sciences</title>
+        <meta name="description" content="Explore skill-based education in aesthetics, clinical aesthetics and trichology at ISATS. Discover courses and practical training opportunities." />
       </Helmet>
-
-      <div className="min-h-screen flex flex-col">
+      <div className="isats-site-shell">
         <Header />
+        <main>
+          <section className="isats-hero">
+            <div className="isats-hero-glow isats-hero-glow-one" />
+            <div className="isats-hero-glow isats-hero-glow-two" />
+            <div className="isats-hero-grid">
+              <motion.div className="isats-hero-copy" initial="hidden" animate="visible" variants={reveal}>
+                <div className="isats-eyebrow"><span /> INSTITUTE OF SKILL-BASED LEARNING</div>
+                <h1>Build skills.<br /><em>Shape futures.</em></h1>
+                <p className="isats-hero-lead">Professional education for the evolving world of aesthetics and trichology.</p>
+                <p className="isats-hero-description">Discover focused learning pathways, practical training and the confidence to take your next career step.</p>
+                <div className="isats-hero-actions">
+                  <Button asChild size="lg" className="isats-primary-button"><Link to="/courses">Explore courses <ArrowRight size={18} /></Link></Button>
+                  <Link to="/about" className="isats-text-link">Discover ISATS <MoveUpRight size={16} /></Link>
+                </div>
+                <div className="isats-hero-note"><span className="isats-note-mark"><Sparkles size={15} /></span><span>Learn with purpose. Practice with confidence.</span></div>
+              </motion.div>
+              <motion.div className="isats-hero-visual" initial={{ opacity: 0, scale: 0.96, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.12 }}>
+                <div className="isats-visual-frame">
+                  <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1100&q=85" alt="Modern clinical learning and professional training environment" />
+                  <div className="isats-visual-overlay" />
+                  <div className="isats-visual-caption"><span className="isats-caption-dot" /><div><strong>Learn by doing</strong><small>Practical skills. Real confidence.</small></div></div>
+                </div>
+                <div className="isats-visual-index">ISATS <span> / </span> LEARN · PRACTICE · GROW</div>
+              </motion.div>
+            </div>
+            <div className="isats-hero-bottom"><span>01 — 03</span><span>SKILL-BASED EDUCATION</span><span>SCROLL TO EXPLORE ↓</span></div>
+          </section>
 
-        {/* Hero Section */}
-        <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
-          {/* Background Image with Overlay */}
-          <div className="absolute inset-0 z-0">
-            <img
-              src="https://images.unsplash.com/photo-1552693673-1bf958298935"
-              alt="Professional healthcare training environment"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-950/85 via-slate-900/80 to-primary/60" />
-          </div>
-
-          {/* Hero Content */}
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
-                style={{ letterSpacing: '-0.02em', textWrap: 'balance' }}
-              >
-                ISATS - Institute of Skill-based Aesthetic & Trichology Sciences
-              </h1>
-              <p className="text-xl md:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto leading-relaxed">
-                Empowering Skills, Building Careers
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-base transition-all duration-200 active:scale-95">
-                  <Link to="/courses">Browse courses <ArrowRight className="ml-2 h-5 w-5" /></Link>
-                </Button>
-                <ApplyNowButton />
-              </div>
+          <section className="isats-intro-section">
+            <motion.div className="isats-section-heading" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={reveal}>
+              <span className="isats-section-kicker">THE ISATS APPROACH</span>
+              <h2>Education that moves<br /><em>you forward.</em></h2>
             </motion.div>
-          </div>
-
-          {/* Decorative Elements */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
-        </section>
-
-        {/* Quick Highlights Section */}
-        <section className="py-20 bg-background">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-4" style={{ textWrap: 'balance' }}>
-                Why choose ISATS
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Join thousands of successful graduates who have built rewarding careers in healthcare aesthetics
-              </p>
+            <motion.div className="isats-intro-copy" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={reveal}>
+              <p>Build a strong foundation through focused learning, expert guidance and practical exposure. Explore programmes created for people ready to grow in the aesthetics and trichology space.</p>
+              <Link to="/about" className="isats-inline-link">More about our institute <ArrowRight size={16} /></Link>
             </motion.div>
+          </section>
 
-            {/* 2+2 Grid Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {highlights.map((highlight, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Card className="h-full shadow-lg hover:shadow-2xl transition-all duration-300 rounded-2xl border-slate-200">
-                    <CardHeader>
-                      <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                        <highlight.icon className="h-7 w-7 text-primary" />
-                      </div>
-                      <CardTitle className="text-xl font-semibold">{highlight.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base leading-relaxed">
-                        {highlight.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+          <section className="isats-highlights-section">
+            <div className="isats-highlights-top">
+              <div><span className="isats-section-kicker">WHY LEARN WITH US</span><h2>A stronger foundation<br /><em>for what comes next.</em></h2></div>
+              <p>Professional learning is more than a certificate. It is the knowledge, practice and support that help you move forward.</p>
+            </div>
+            <div className="isats-highlight-grid">
+              {highlights.map((item, index) => (
+                <motion.article className="isats-highlight-card" key={item.number} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={reveal} transition={{ delay: index * 0.08 }}>
+                  <div className="isats-highlight-meta"><span>{item.number}</span><item.icon size={22} strokeWidth={1.6} /></div>
+                  <h3>{item.title}</h3><p>{item.description}</p>
+                  <span className="isats-card-rule" />
+                </motion.article>
               ))}
             </div>
+          </section>
 
-            {/* CTA Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-center mt-16"
-            >
-              <Button size="lg" asChild className="transition-all duration-200 active:scale-95">
-                <Link to="/about">
-                  Learn more about us
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </motion.div>
-          </div>
-        </section>
-
+          <section className="isats-course-cta">
+            <div className="isats-cta-orb" />
+            <div className="isats-cta-content"><span className="isats-section-kicker">YOUR NEXT STEP STARTS HERE</span><h2>Find the learning path<br />that fits <em>your ambition.</em></h2><p>Explore our current programmes or connect with the admissions team for guidance.</p><Button asChild size="lg" className="isats-cta-button"><Link to="/courses">View all courses <ArrowRight size={18} /></Link></Button></div>
+            <div className="isats-cta-mark">ISATS<span>®</span></div>
+          </section>
+        </main>
         <Footer />
         <WhatsAppButton />
       </div>
     </>
   );
-};
-
-export default HomePage;
+}
