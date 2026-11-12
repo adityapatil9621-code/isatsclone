@@ -596,7 +596,8 @@ body { background: #fff; color: #17323b; }
 .isats-hero-copy { max-width: 610px; padding: 12px 0 30px; }
 .isats-eyebrow, .isats-section-kicker { display: inline-flex; align-items: center; gap: 10px; color: #26757d; font-size: 10px; font-weight: 800; letter-spacing: .19em; line-height: 1.5; }
 .isats-eyebrow > span { width: 24px; height: 1px; background: #2b858d; }
-.isats-hero h1 { margin: 26px 0 22px; color: #15343d; font-size: clamp(54px, 6.1vw, 88px); font-weight: 650; letter-spacing: -.075em; line-height: .99; }
+.isats-hero h1 { margin: 26px 0 22px; color: #15343d; font-size: clamp(54px, 6.1vw, 88px); font-weight: 650; letter-spacing: 0.005em; line-height: .99; }
+.isats-hero h1 em { letter-spacing: 0.01em; }
 .isats-hero h1 em, .isats-section-heading h2 em, .isats-highlights-top h2 em, .isats-cta-content h2 em { color: #31868a; font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
 .isats-hero-lead { max-width: 510px; margin: 0; color: #244b53; font-size: clamp(18px, 1.7vw, 22px); line-height: 1.5; font-weight: 550; }
 .isats-hero-description { max-width: 475px; margin: 14px 0 0; color: #657b80; font-size: 14px; line-height: 1.85; }
