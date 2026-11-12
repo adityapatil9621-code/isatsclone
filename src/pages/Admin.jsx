@@ -4,10 +4,14 @@ import { titanMailLink } from '@/data/contactInfo.js';
 
 const fmt = (value) => value ? new Date(value).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : '—';
 const STATUS_LABELS = { new: 'New', contacted: 'Contacted', follow_up: 'Follow-up', converted: 'Converted', closed: 'Closed' };
+const APP_STATUS_LABELS = { new: 'New', under_review: 'Under review', verified: 'Verified', rejected: 'Rejected' };
+const BACKGROUND_LABELS = { tenth: '10th pass', twelfth: '12th pass', graduate: 'Degree / Diploma' };
 const digits = (value) => String(value || '').replace(/\D/g, '');
+const sizeLabel = (bytes) => bytes < 1024 * 1024 ? `${Math.max(1, Math.round(bytes / 1024))} KB` : `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 
 export function AdminPanel() {
   const [enquiries, setEnquiries] = useState([]);
+  const [applications, setApplications] = useState([]);
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [error, setError] = useState('');
@@ -29,6 +33,12 @@ export function AdminPanel() {
     if (response.ok) setUsers(result.users || []);
   }
 
+  async function loadApplications() {
+    const response = await fetch('/api/admin/applications', { credentials: 'include' });
+    const result = await response.json();
+    if (response.ok) setApplications(result.applications || []);
+  }
+
   useEffect(() => {
     let active = true;
     fetch('/api/admin/enquiries', { credentials: 'include' })
@@ -40,6 +50,7 @@ export function AdminPanel() {
       .catch((err) => active && setError(err.message))
       .finally(() => active && setLoading(false));
     loadUsers().catch(() => {});
+    loadApplications().catch(() => {});
     return () => { active = false; };
   }, []);
 
@@ -73,21 +84,79 @@ export function AdminPanel() {
     finally { setUpdatingId(''); }
   }
 
+  async function updateApplicationStatus(id, status) {
+    setUpdatingId(id); setError('');
+    try {
+      const response = await fetch(`/api/admin/applications/${id}/status`, {
+        method: 'PATCH', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Could not update status.');
+      setApplications((current) => current.map((item) => item.id === id ? { ...item, status: result.application.status } : item));
+    } catch (err) { setError(err.message); }
+    finally { setUpdatingId(''); }
+  }
+
   const counts = {
     total: enquiries.length,
     new: enquiries.filter((item) => item.status === 'new').length,
     followUp: enquiries.filter((item) => item.status === 'follow_up').length,
     converted: enquiries.filter((item) => item.status === 'converted').length,
+    newApplications: applications.filter((item) => item.status === 'new').length,
   };
 
   return (
     <>
       {error && <p className="auth-message auth-error" role="alert">{error}</p>}
       <div className="admin-stats">
-        {[["Total enquiries", counts.total], ["New", counts.new], ["Follow-up", counts.followUp], ["Converted", counts.converted], ["Registered users", users.length]].map(([label, value]) => (
+        {[["New applications", counts.newApplications], ["Total enquiries", counts.total], ["New enquiries", counts.new], ["Follow-up", counts.followUp], ["Converted", counts.converted], ["Registered users", users.length]].map(([label, value]) => (
           <div key={label} className="profile-panel admin-stat"><strong>{value}</strong><span>{label}</span></div>
         ))}
       </div>
+
+      <section className="profile-panel" style={{ marginBottom: 18 }}>
+        <div className="profile-panel-heading" style={{ flexWrap: 'wrap' }}>
+          <h2 style={{ margin: 0 }}>Course applications ({applications.length})</h2>
+          <button type="button" className="auth-secondary" onClick={() => { loadApplications().catch((err) => setError(err.message)); }}>Refresh</button>
+        </div>
+        {applications.length === 0 ? <p className="auth-loading">No applications yet.</p> : (
+          <div className="admin-table-wrap">
+            <table className="admin-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th><th>Background</th><th>Documents</th><th>Received</th><th>Status</th><th>Contact</th></tr></thead>
+              <tbody>{applications.map((app) => (
+                <tr key={app.id}>
+                  <td>{app.fullName}{app.status === 'new' && <span className="admin-pill ok">New</span>}</td>
+                  <td><a className="text-primary hover:underline" href={titanMailLink(app.email, app.fullName, app.course)} title="Open in Titan Mail">{app.email}</a></td>
+                  <td className="whitespace-nowrap">{app.phone}</td>
+                  <td>{app.course}</td>
+                  <td>{BACKGROUND_LABELS[app.academicStatus] || app.academicStatus}{app.years ? ` (${app.years} yr)` : ''}</td>
+                  <td>
+                    <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+                      {app.documents.map((doc) => (
+                        <li key={doc.id}>
+                          <a className="text-primary hover:underline" href={`/api/admin/applications/${app.id}/documents/${doc.id}`} target="_blank" rel="noreferrer" title={doc.fileName}>
+                            {doc.label}
+                          </a>
+                          <span className="text-xs text-muted-foreground"> ({sizeLabel(doc.size)})</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td className="whitespace-nowrap">{fmt(app.createdAt)}</td>
+                  <td>
+                    <select aria-label={`Status for ${app.fullName}`} disabled={updatingId === app.id} value={app.status} onChange={(e) => updateApplicationStatus(app.id, e.target.value)} className="rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm">
+                      {Object.entries(APP_STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                    </select>
+                  </td>
+                  <td><a className="text-green-700 font-medium hover:underline" href={`https://wa.me/${digits(app.phone)}`} target="_blank" rel="noreferrer">WhatsApp</a></td>
+                </tr>
+              ))}</tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
       <section className="profile-panel">
         <div className="profile-panel-heading" style={{ flexWrap: 'wrap' }}>
           <h2 style={{ margin: 0 }}>Course enquiries ({filtered.length})</h2>
@@ -97,7 +166,7 @@ export function AdminPanel() {
               <option value="all">All statuses</option>
               {Object.entries(STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
             </select>
-            <button type="button" className="auth-secondary" onClick={() => { loadUsers().catch(() => {}); setLoading(true); loadEnquiries().catch((err) => setError(err.message)).finally(() => setLoading(false)); }}>Refresh</button>
+            <button type="button" className="auth-secondary" onClick={() => { loadUsers().catch(() => {}); loadApplications().catch(() => {}); setLoading(true); loadEnquiries().catch((err) => setError(err.message)).finally(() => setLoading(false)); }}>Refresh</button>
           </div>
         </div>
         {loading ? <p className="auth-loading">Loading enquiries…</p> : filtered.length === 0 ? <p className="auth-loading">No enquiries found.</p> : (
@@ -171,7 +240,7 @@ export default function Admin() {
       <div className="profile-shell admin-shell">
         <header className="profile-header">
           <Link to="/" className="auth-brand">ISATS</Link>
-          <div><p className="auth-eyebrow">ADMIN</p><h1>Course enquiries</h1></div>
+          <div><p className="auth-eyebrow">ADMIN</p><h1>Applications & enquiries</h1></div>
           <button type="button" className="auth-secondary" onClick={logout}>Sign out</button>
         </header>
         <AdminPanel />

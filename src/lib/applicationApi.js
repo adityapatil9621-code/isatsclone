@@ -1,9 +1,5 @@
-// Sends the admission application (details + PDF documents) to a Google Apps Script
-// web app owned by isats.sales1@gmail.com. The script emails everything to that
-// inbox - no server and no app password required.
-// Setup: see google-apps-script/README.md, then put the web app URL in .env:
-//   VITE_APPLICATION_API_URL=https://script.google.com/macros/s/XXXX/exec
-const API_URL = import.meta.env.VITE_APPLICATION_API_URL;
+// Sends the admission application (details + PDF documents) to the ISATS server,
+// which emails everything to admin@isatscosmetology.com (see server/apply.js).
 
 const toBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -14,10 +10,6 @@ const toBase64 = (file) =>
   });
 
 export async function submitApplication({ details, documents }) {
-  if (!API_URL) {
-    throw new Error('Applications are not enabled yet: VITE_APPLICATION_API_URL is not set.');
-  }
-
   const payload = {
     ...details,
     documents: await Promise.all(
@@ -30,10 +22,10 @@ export async function submitApplication({ details, documents }) {
     ),
   };
 
-  // text/plain avoids a CORS preflight, which Apps Script web apps do not answer
-  const response = await fetch(API_URL, {
+  const response = await fetch('/api/apply', {
     method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   });
 

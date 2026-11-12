@@ -24,6 +24,8 @@ import {
 
 import { verifyFirebaseGoogleToken } from './firebaseAdmin.js';
 import { isAdminUser, listUsers } from './admin.js';
+import { handleApply } from './apply.js';
+import { handleAdminApplications } from './applications.js';
 
 const MAX_BODY_BYTES = 32 * 1024;
 const SESSION_COOKIE = 'isats_session';
@@ -62,7 +64,9 @@ const server = http.createServer(async (req, res) => {
           '/api/health',
           '/api/courses',
           '/api/enquiries',
+          '/api/apply',
           '/api/admin/enquiries',
+          '/api/admin/applications',
           '/api/auth/register',
           '/api/auth/login',
           '/api/auth/firebase/google',
@@ -829,6 +833,22 @@ const server = http.createServer(async (req, res) => {
         enquiryId: saved.rows[0].id,
         createdAt: saved.rows[0].created_at,
       });
+    }
+
+    // --------------------------------------------------
+    // COURSE APPLICATIONS (saved for the admin page, optional email copy)
+    // Handled in server/apply.js
+    // --------------------------------------------------
+    if (req.method === 'POST' && url.pathname === '/api/apply') {
+      return handleApply(req, res, sendJson);
+    }
+
+    // --------------------------------------------------
+    // ADMIN: course applications (list, open PDFs, change status)
+    // Handled in server/applications.js
+    // --------------------------------------------------
+    if (url.pathname.startsWith('/api/admin/applications')) {
+      return handleAdminApplications(req, res, url, { sendJson, readJson });
     }
 
     // --------------------------------------------------

@@ -8,6 +8,7 @@ import WhatsAppButton from '@/components/WhatsAppButton.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx';
 import { Award, Users, Briefcase, IndianRupee, ArrowRight } from 'lucide-react';
+import ApplyNowButton from '@/components/ApplyNowButton.jsx';
 
 const HomePage = () => {
   const highlights = [
@@ -81,6 +82,7 @@ const HomePage = () => {
                 <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-base transition-all duration-200 active:scale-95">
                   <Link to="/courses">Browse courses <ArrowRight className="ml-2 h-5 w-5" /></Link>
                 </Button>
+                <ApplyNowButton />
               </div>
             </motion.div>
           </div>
